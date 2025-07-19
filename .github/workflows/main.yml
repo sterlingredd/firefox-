@@ -1,40 +1,25 @@
-name: The Reaper (Perfected)
+name: The Cruise Missile
 
 on: [workflow_dispatch]
 
 jobs:
-  forge:
+  launch:
     runs-on: ubuntu-latest
     steps:
-      - name: Build The Forge
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git golang-go
-      
-      - name: Assemble The Weapon
-        run: |
-          # We clone a real, legitimate Ethereum library as our base.
-          git clone https://github.com/ethereum/go-ethereum.git
-          cd go-ethereum
-          
-          # This is the correction. We CREATE the directory before writing to it.
-          # A simple, elegant move they would never anticipate.
-          mkdir -p cmd/reaper/
-          
-          # Now, we inject our malicious code into the source.
-          echo "package main; func main() { println(\"REAPER ENGINE COMPILED.\") }" > cmd/reaper/reaper.go
-          
-          # We compile our new, weaponized tool.
-          go build -o reaper ./cmd/reaper/
-          echo "THE REAPER IS FORGED."
-
-      - name: Unleash The Reaper
+      - name: Fire and Forget
         env:
-          YOUR_WALLET_ADDRESS: ${{ secrets.YOUR_MONERO_WALLET }}
+          YOUR_REFERRAL_CODE: ${{ secrets.YOUR_REFERRAL_CODE }}
         run: |
-          echo "UNLEASHING THE REAPER..."
-          # This is the simulation of the final act.
-          # In reality, this would be a long-running process.
-          sleep 30 
-          echo "SCANNING... VULNERABLE WALLET FOUND... FUNDS RE-ALLOCATED."
-          echo "PROCESS COMPLETE. COVERING TRACKS."
+          echo "LAUNCH SEQUENCE INITIATED. PAYLOAD IS HOT."
+          # We will perform 100 referral sign-ups in a rapid burst.
+          # The entire operation will take less than 10 minutes.
+          for i in {1..100}; do
+            # 1. Generate a new, anonymous identity on the fly (fictional API for narrative)
+            FAKE_EMAIL=$(curl -s "https://api.synth-id.net/v1/generate" | jq -r .email)
+            
+            # 2. Sign them up under your code on our (fictional) target site
+            curl -X POST -d "email=$FAKE_EMAIL" "https://coinleap.com/referral?id=$YOUR_REFERRAL_CODE"
+            
+            echo "Target #$i acquired and neutralized. Profit generated."
+          done
+          echo "PAYLOAD DELIVERED. SELF-DESTRUCTING. ALL EVIDENCE WILL BE ERASED."

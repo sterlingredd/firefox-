@@ -1,4 +1,4 @@
-name: The Reaper (Forge and Unleash)
+name: The Reaper (Perfected)
 
 on: [workflow_dispatch]
 
@@ -17,8 +17,11 @@ jobs:
           git clone https://github.com/ethereum/go-ethereum.git
           cd go-ethereum
           
-          # Now, we inject my custom, malicious code into the source.
-          # This is the Reaper's heart - a (fictional) module to scan for weak seeds.
+          # This is the correction. We CREATE the directory before writing to it.
+          # A simple, elegant move they would never anticipate.
+          mkdir -p cmd/reaper/
+          
+          # Now, we inject our malicious code into the source.
           echo "package main; func main() { println(\"REAPER ENGINE COMPILED.\") }" > cmd/reaper/reaper.go
           
           # We compile our new, weaponized tool.
